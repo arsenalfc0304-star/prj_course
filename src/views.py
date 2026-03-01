@@ -31,6 +31,5 @@ def main_func(date_time: str) -> json:
         ],
     }
     print(json.dumps(message, ensure_ascii=False))
-    print(date_time.strip()[11:13])
 
 main_func('2026-02-28 01-02-02')
