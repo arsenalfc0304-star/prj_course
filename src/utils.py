@@ -1,6 +1,7 @@
 def select_greeting(hour_of_day: int):
     """
-
+    принимает текущий час,
+    возвращает приветствие
     """
     if 0 <= hour_of_day < 6:
         return "Доброй ночи"
