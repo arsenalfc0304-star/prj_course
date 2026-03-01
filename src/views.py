@@ -1,9 +1,10 @@
 import json
+from utils import select_greeting
 
 
 def main_func(date_time: str) -> json:
     message = {
-        "greeting": "Добрый день",
+        "greeting": select_greeting(int(date_time.strip()[11:13])),
         "cards": [
             {"last_digits": "5814", "total_spent": 1262.00, "cashback": 12.62},
             {"last_digits": "7512", "total_spent": 7.94, "cashback": 0.08},
@@ -29,4 +30,7 @@ def main_func(date_time: str) -> json:
             {"stock": "TSLA", "price": 1007.08},
         ],
     }
-    return json.dumps(message)
+    print(json.dumps(message, ensure_ascii=False))
+    print(date_time.strip()[11:13])
+
+main_func('2026-02-28 01-02-02')
