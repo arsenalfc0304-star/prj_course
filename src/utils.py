@@ -11,3 +11,12 @@ def select_greeting(hour_of_day: int):
         return "Добрый день"
     else:
         return "Добрый вечер"
+
+
+def read_data_from_excel(path: str) -> list:
+    """
+    принимает путь к файлу Excel,
+    выдает список словарей с транзакциями
+    """
+    data = pd.read_excel(path)
+    return data.to_dict(orient="records")
