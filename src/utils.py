@@ -1,0 +1,12 @@
+def select_greeting(hour_of_day: int):
+    """
+
+    """
+    if 0 <= hour_of_day < 6:
+        return "Доброй ночи"
+    elif 6 <= hour_of_day < 12:
+        return "Доброе утро"
+    elif 12 <= hour_of_day < 18:
+        return "Добрый день"
+    else:
+        return "Добрый вечер"
