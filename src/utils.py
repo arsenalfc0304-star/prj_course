@@ -1,4 +1,7 @@
-def select_greeting(hour_of_day: int):
+import pandas as pd
+
+
+def select_greeting(hour_of_day: int) -> str:
     """
     принимает текущий час,
     возвращает приветствие
