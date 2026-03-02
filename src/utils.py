@@ -23,3 +23,11 @@ def read_data_from_excel(path: str) -> list:
     """
     data = pd.read_excel(path)
     return data.to_dict(orient="records")
+
+
+def sort_by_amount(dict_list: list, descending: bool = True) -> list:
+    """
+    принимает список словарей и необязательный параметр, задающий порядок сортировки (по умолчанию — убывание),
+    возвращает новый список, отсортированный по дате (date)
+    """
+    return sorted(dict_list, key=lambda x: x["Сумма платежа"], reverse=descending)

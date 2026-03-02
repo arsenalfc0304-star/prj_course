@@ -1,26 +1,28 @@
 import json
-from utils import select_greeting
+from utils import select_greeting, read_data_from_excel, sort_by_amount
 
 
 def main_func(date_time: str) -> json:
+    data = read_data_from_excel('data/operations.xlsx')
     message = {
         "greeting": select_greeting(int(date_time.strip()[11:13])),
         "cards": [
             {"last_digits": "5814", "total_spent": 1262.00, "cashback": 12.62},
             {"last_digits": "7512", "total_spent": 7.94, "cashback": 0.08},
         ],
-        "top_transactions": [
-            {
-                "date": "21.12.2021",
-                "amount": 1198.23,
-                "category": "Переводы",
-                "description": "Перевод Кредитная карта. ТП 10.2 RUR",
-            },
-            {"date": "20.12.2021", "amount": 829.00, "category": "Супермаркеты", "description": "Лента"},
-            {"date": "20.12.2021", "amount": 421.00, "category": "Различные товары", "description": "Ozon.ru"},
-            {"date": "16.12.2021", "amount": -14216.42, "category": "ЖКХ", "description": "ЖКУ Квартира"},
-            {"date": "16.12.2021", "amount": 453.00, "category": "Бонусы", "description": "Кешбэк за обычные покупки"},
-        ],
+        "top_transactions": sort_by_amount(data)[0:5],
+        # "top_transactions": [
+        #     {
+        #         "date": "21.12.2021",
+        #         "amount": 1198.23,
+        #         "category": "Переводы",
+        #         "description": "Перевод Кредитная карта. ТП 10.2 RUR",
+        #     },
+        #     {"date": "20.12.2021", "amount": 829.00, "category": "Супермаркеты", "description": "Лента"},
+        #     {"date": "20.12.2021", "amount": 421.00, "category": "Различные товары", "description": "Ozon.ru"},
+        #     {"date": "16.12.2021", "amount": -14216.42, "category": "ЖКХ", "description": "ЖКУ Квартира"},
+        #     {"date": "16.12.2021", "amount": 453.00, "category": "Бонусы", "description": "Кешбэк за обычные покупки"},
+        # ],
         "currency_rates": [{"currency": "USD", "rate": 73.21}, {"currency": "EUR", "rate": 87.08}],
         "stock_prices": [
             {"stock": "AAPL", "price": 150.12},
@@ -31,5 +33,6 @@ def main_func(date_time: str) -> json:
         ],
     }
     print(json.dumps(message, ensure_ascii=False))
+    #print(read_data_from_excel('data/operations.xlsx'))
 
-main_func('2026-02-28 01-02-02')
+main_func("2026-02-28 01-02-02")
