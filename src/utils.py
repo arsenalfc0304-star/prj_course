@@ -30,4 +30,22 @@ def sort_by_amount(dict_list: list, descending: bool = True) -> list:
     принимает список словарей и необязательный параметр, задающий порядок сортировки (по умолчанию — убывание),
     возвращает новый список, отсортированный по дате (date)
     """
-    return sorted(dict_list, key=lambda x: x["Сумма платежа"], reverse=descending)
+    return sorted(dict_list, key=lambda x: abs(x["Сумма платежа"]), reverse=descending)
+
+
+def get_cards(dict_list: list):
+    cards_set = set()
+    for transaction in dict_list:
+        if str(transaction['Номер карты'])[1:].isdigit():
+            cards_set.add(str(transaction['Номер карты'])[1:])
+    return cards_set
+
+
+def get_card_transactions(dict_list: list, cards_set: set):
+    total_amount_set = set()
+    for card in cards_set:
+        total_amount = 0
+        for transaction in dict_list:
+            if transaction['Номер карты'] == card:
+                total_amount += transaction['Сумма операции']
+            total_amount_set.add(total_amount)
