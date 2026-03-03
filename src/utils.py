@@ -37,15 +37,16 @@ def get_cards(dict_list: list):
     cards_set = set()
     for transaction in dict_list:
         if str(transaction['Номер карты'])[1:].isdigit():
-            cards_set.add(str(transaction['Номер карты'])[1:])
+            cards_set.add(transaction['Номер карты'])
     return cards_set
 
 
 def get_card_transactions(dict_list: list, cards_set: set):
-    total_amount_set = set()
+    total_amount_list = []
     for card in cards_set:
         total_amount = 0
         for transaction in dict_list:
             if transaction['Номер карты'] == card:
                 total_amount += transaction['Сумма операции']
-            total_amount_set.add(total_amount)
+        total_amount_list.append(total_amount)
+    return total_amount_list

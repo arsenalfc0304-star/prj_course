@@ -1,10 +1,11 @@
 import json
-from utils import select_greeting, read_data_from_excel, sort_by_amount, get_cards
+from utils import select_greeting, read_data_from_excel, sort_by_amount, get_cards, get_card_transactions
 
 
 def main_func(date_time: str) -> json:
     data = read_data_from_excel('data/operations.xlsx')
     cards = get_cards(data)
+    total_amount = get_card_transactions(data, cards)
     message = {
         "greeting": select_greeting(int(date_time.strip()[11:13])),
         "cards": [
@@ -36,5 +37,6 @@ def main_func(date_time: str) -> json:
     }
     print(json.dumps(message, ensure_ascii=False))
     print(cards)
+    print(total_amount)
 
 main_func("2026-02-28 01-02-02")
