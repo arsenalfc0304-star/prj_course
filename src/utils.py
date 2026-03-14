@@ -91,3 +91,12 @@ def load_json(path):
             return data
     except Exception as e:
         return []
+
+
+def spending_by_category(transactions: pd.DataFrame,
+                         category: str,
+                         date: Optional[str] = None) -> pd.DataFrame:
+    """
+
+    """
+    pass
