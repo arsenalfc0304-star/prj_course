@@ -1,5 +1,11 @@
 import pandas as pd
+import requests
+from dotenv import load_dotenv
+import os
+import json
 
+load_dotenv()
+apikey = os.getenv("API_KEY")
 
 def select_greeting(hour_of_day: int) -> str:
     """
@@ -48,5 +54,40 @@ def get_card_transactions(dict_list: list, cards_set: set):
         for transaction in dict_list:
             if transaction['Номер карты'] == card:
                 total_amount += transaction['Сумма операции']
-        total_amount_list.append(total_amount)
+        total_amount_list.append(abs(total_amount))
     return total_amount_list
+
+
+def get_api_convertion_to_rub(transaction: dict) -> float:
+    """
+    обращается к внешнему API (Exchange Rates Data API) для получения текущего курса валют
+    и конвертации суммы операции из USD или EUR в рубли
+    """
+    url = "https://api.apilayer.com/exchangerates_data/convert"
+    payload = {
+        "amount": float(transaction["operationAmount"]["amount"]),
+        "from": transaction["operationAmount"]["currency"]["code"],
+        "to": "RUB",
+    }
+    headers = {"apikey": apikey}
+
+    response = requests.get(url, headers=headers, params=payload)
+    status_code = response.status_code
+    result = response.json()["result"]
+    if status_code == 200:
+        return float(result)
+    else:
+        return 0.0
+
+
+def load_json(path):
+    """
+    принимает на вход путь до JSON-файла и возвращает список словарей с данными о финансовых транзакциях.
+    Если файл пустой, содержит не список или не найден, функция возвращает пустой список.
+    """
+    try:
+        with open(path, encoding="utf-8") as f:
+            data = json.load(f)
+            return data
+    except Exception as e:
+        return []

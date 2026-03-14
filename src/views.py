@@ -1,5 +1,5 @@
 import json
-from utils import select_greeting, read_data_from_excel, sort_by_amount, get_cards, get_card_transactions
+from utils import select_greeting, read_data_from_excel, sort_by_amount, get_cards, get_card_transactions, load_json
 
 
 def main_func(date_time: str) -> json:
@@ -25,8 +25,9 @@ def main_func(date_time: str) -> json:
         #     {"date": "16.12.2021", "amount": -14216.42, "category": "ЖКХ", "description": "ЖКУ Квартира"},
         #     {"date": "16.12.2021", "amount": 453.00, "category": "Бонусы", "description": "Кешбэк за обычные покупки"},
         # ],
+        "currency_rates": load_json('data/user_settings.json')
 
-        # "currency_rates": [{"currency": "USD", "rate": 73.21}, {"currency": "EUR", "rate": 87.08}],
+        #    [{"currency": "USD", "rate": 73.21}, {"currency": "EUR", "rate": 87.08}],
         # "stock_prices": [
         #     {"stock": "AAPL", "price": 150.12},
         #     {"stock": "AMZN", "price": 3173.18},
