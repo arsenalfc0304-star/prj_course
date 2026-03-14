@@ -8,7 +8,7 @@ from utils import (
     get_card_total_amount,
     load_json,
     sort_by_date,
-    format_transactions
+    format_transactions,
 )
 
 
@@ -25,15 +25,17 @@ def main_func(date_time: str) -> json:
     cards = get_cards(selected_data)
     formatted_card_information = []
     for card in cards:
-        formatted_card_information.append("last_digits": card[1:], "total_spent": get_card_total_amount(, "cashback": 0.08
-    total_amount = get_card_transactions(selected_data, cards)
+        formatted_card_information.append(
+            {
+                "last_digits": card[1:],
+                "total_spent": get_card_total_amount(selected_data, card),
+                "cashback": get_card_total_amount(selected_data, card) / 100,
+            }
+        )
 
     message = {
         "greeting": select_greeting(int(date_time.strip()[11:13])),
-        "cards": [
-            {"last_digits": "5814", "total_spent": 1262.00, "cashback": 12.62},
-            {"last_digits": "7512", "total_spent": 7.94, "cashback": 0.08},
-        ],
+        "cards": formatted_card_information,
         "top_transactions": format_transactions(most_valuable_transactions),
         "currency_rates": load_json("data/user_settings.json"),
         #    [{"currency": "USD", "rate": 73.21}, {"currency": "EUR", "rate": 87.08}],
