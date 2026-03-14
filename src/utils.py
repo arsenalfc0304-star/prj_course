@@ -8,7 +8,8 @@ import json
 import datetime
 
 load_dotenv()
-apikey = os.getenv("API_KEY")
+currency_apikey = os.getenv("CURRENCY_API_KEY")
+stock_apikey = os.getenv("STOCK_API_KEY")
 
 
 def select_greeting(hour_of_day: int) -> str:
@@ -69,7 +70,27 @@ def get_api_currency_rate(currency: str) -> float:
         "from": currency,
         "to": "RUB",
     }
-    headers = {"apikey": apikey}
+    headers = {"apikey": currency_apikey}
+
+    response = requests.get(url, headers=headers, params=payload)
+    status_code = response.status_code
+    result = response.json()["result"]
+    if status_code == 200:
+        return float(result)
+    else:
+        return 0.0
+
+def get_api_stock_price(stock: str) -> float:
+    """
+    обращается к внешнему API (Exchange Rates Data API) для получения текущего курса акций
+    """
+    url = "'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey=demo'"
+    payload = {
+        "amount": 1.0,
+        "from": currency,
+        "to": "RUB",
+    }
+    headers = {"apikey": stock_apikey}
 
     response = requests.get(url, headers=headers, params=payload)
     status_code = response.status_code

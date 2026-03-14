@@ -9,7 +9,8 @@ from utils import (
     load_json,
     sort_by_date,
     format_transactions,
-    get_api_currency_rate
+    get_api_currency_rate,
+    get_api_stock_price
 )
 
 
@@ -40,20 +41,14 @@ def main_func(date_time: str) -> json:
 
     formatted_stock_data = []
     for stock in user_settings['user_stocks']:
-        formatted_stock_data.append({"stock": stock, "price": round(get_api_currency_rate(currency), 2)})
+        formatted_stock_data.append({"stock": stock, "price": round(get_api_stock_price(stock), 2)})
 
     message = {
         "greeting": select_greeting(int(date_time.strip()[11:13])),
         "cards": formatted_card_information,
         "top_transactions": format_transactions(most_valuable_transactions),
         "currency_rates": formatted_currency_data,
-        "stock_prices": [
-        #     {"stock": "AAPL", "price": 150.12},
-        #     {"stock": "AMZN", "price": 3173.18},
-        #     {"stock": "GOOGL", "price": 2742.39},
-        #     {"stock": "MSFT", "price": 296.71},
-        #     {"stock": "TSLA", "price": 1007.08},
-        # ],
+        "stock_prices": formatted_stock_data
     }
     print(json.dumps(message, ensure_ascii=False))
 
