@@ -88,9 +88,9 @@ def get_api_stock_price(stock: str) -> float:
 
     response = requests.get(url)
     status_code = response.status_code
-    data = response.json()
-    last_refreshed = data["Meta Data"]["3. Last Refreshed"]
-    result = data["Time Series (Daily)"][last_refreshed]["4. close"]
+    result = response.json()
+    # last_refreshed = raw_result['Meta Data']["3. Last Refreshed"]
+    # result = raw_result["Time Series (Daily)"][last_refreshed]["4. close"]
     if status_code == 200:
         return result
     else:
