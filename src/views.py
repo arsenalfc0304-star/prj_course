@@ -34,18 +34,6 @@ def main_func(date_time: str) -> json:
             {"last_digits": "7512", "total_spent": 7.94, "cashback": 0.08},
         ],
         "top_transactions": most_valuable_transactions_formatted,
-        # "top_transactions": [
-        #     {
-        #         "date": "21.12.2021",
-        #         "amount": 1198.23,
-        #         "category": "Переводы",
-        #         "description": "Перевод Кредитная карта. ТП 10.2 RUR",
-        #     },
-        #     {"date": "20.12.2021", "amount": 829.00, "category": "Супермаркеты", "description": "Лента"},
-        #     {"date": "20.12.2021", "amount": 421.00, "category": "Различные товары", "description": "Ozon.ru"},
-        #     {"date": "16.12.2021", "amount": -14216.42, "category": "ЖКХ", "description": "ЖКУ Квартира"},
-        #     {"date": "16.12.2021", "amount": 453.00, "category": "Бонусы", "description": "Кешбэк за обычные покупки"},
-        # ],
         "currency_rates": load_json("data/user_settings.json"),
         #    [{"currency": "USD", "rate": 73.21}, {"currency": "EUR", "rate": 87.08}],
         # "stock_prices": [
