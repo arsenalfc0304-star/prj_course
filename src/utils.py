@@ -95,6 +95,14 @@ def load_json(path):
         return []
 
 
+def sort_by_date(dict_list: list, descending: bool = False) -> list:
+    """
+    принимает список словарей и необязательный параметр, задающий порядок сортировки (по умолчанию — убывание),
+    возвращает новый список, отсортированный по дате (date)
+    """
+    return sorted(dict_list, key=lambda x: x["Дата платежа"], reverse=descending)
+
+
 def spending_by_category(transactions: pd.DataFrame,
                          category: str,
                          date: Optional[str] = None) -> pd.DataFrame:
