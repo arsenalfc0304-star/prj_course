@@ -59,15 +59,14 @@ def get_card_total_amount(transactions: list, card: str):
     return total_amount
 
 
-def get_api_convertion_to_rub(transaction: dict) -> float:
+def get_api_currency_rate(currency: str) -> float:
     """
     обращается к внешнему API (Exchange Rates Data API) для получения текущего курса валют
-    и конвертации суммы операции из USD или EUR в рубли
     """
     url = "https://api.apilayer.com/exchangerates_data/convert"
     payload = {
-        "amount": float(transaction["operationAmount"]["amount"]),
-        "from": transaction["operationAmount"]["currency"]["code"],
+        "amount": 1.0,
+        "from": currency,
         "to": "RUB",
     }
     headers = {"apikey": apikey}

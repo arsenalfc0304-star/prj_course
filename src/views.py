@@ -9,6 +9,7 @@ from utils import (
     load_json,
     sort_by_date,
     format_transactions,
+    get_api_currency_rate
 )
 
 
@@ -28,18 +29,25 @@ def main_func(date_time: str) -> json:
         formatted_card_information.append(
             {
                 "last_digits": card[1:],
-                "total_spent": get_card_total_amount(selected_data, card),
-                "cashback": get_card_total_amount(selected_data, card) / 100,
+                "total_spent": round(get_card_total_amount(selected_data, card), 2),
+                "cashback": round(get_card_total_amount(selected_data, card) / 100, 2)
             }
         )
+    user_settings = load_json("data/user_settings.json")
+    formatted_currency_data = []
+    for currency in user_settings['user_currencies']:
+        formatted_currency_data.append({"currency": currency, "rate": round(get_api_currency_rate(currency), 2)})
+
+    formatted_stock_data = []
+    for stock in user_settings['user_stocks']:
+        formatted_stock_data.append({"stock": stock, "price": round(get_api_currency_rate(currency), 2)})
 
     message = {
         "greeting": select_greeting(int(date_time.strip()[11:13])),
         "cards": formatted_card_information,
         "top_transactions": format_transactions(most_valuable_transactions),
-        "currency_rates": load_json("data/user_settings.json"),
-        #    [{"currency": "USD", "rate": 73.21}, {"currency": "EUR", "rate": 87.08}],
-        # "stock_prices": [
+        "currency_rates": formatted_currency_data,
+        "stock_prices": [
         #     {"stock": "AAPL", "price": 150.12},
         #     {"stock": "AMZN", "price": 3173.18},
         #     {"stock": "GOOGL", "price": 2742.39},
@@ -48,8 +56,6 @@ def main_func(date_time: str) -> json:
         # ],
     }
     print(json.dumps(message, ensure_ascii=False))
-    print(cards)
-    print(total_amount)
 
 
 main_func("2021-11-28 01:02:02")
