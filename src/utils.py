@@ -5,6 +5,7 @@ import requests
 from dotenv import load_dotenv
 import os
 import json
+import datetime
 
 load_dotenv()
 apikey = os.getenv("API_KEY")
@@ -100,7 +101,7 @@ def sort_by_date(dict_list: list, descending: bool = False) -> list:
     принимает список словарей и необязательный параметр, задающий порядок сортировки (по умолчанию — убывание),
     возвращает новый список, отсортированный по дате (date)
     """
-    return sorted(dict_list, key=lambda x: x["Дата платежа"], reverse=descending)
+    return sorted(dict_list, key=lambda x: datetime.datetime.strptime(x["Дата операции"], "%d.%m.%Y %H:%M:%S"), reverse=descending)
 
 
 def spending_by_category(transactions: pd.DataFrame,

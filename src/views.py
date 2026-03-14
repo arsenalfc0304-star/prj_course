@@ -13,7 +13,7 @@ from utils import (
 
 def main_func(date_time: str) -> json:
     raw_data = read_data_from_excel("data/operations.xlsx")
-    sorted_data = sort_by_date(datetime.datetime.strptime(raw_data, "%d-%m-%Y %H:%M:%S"))
+    sorted_data = sort_by_date(raw_data)
     cards = get_cards(sorted_data)
     total_amount = get_card_transactions(sorted_data, cards)
     message = {
