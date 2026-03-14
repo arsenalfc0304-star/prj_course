@@ -51,15 +51,12 @@ def get_cards(dict_list: list):
     return cards_set
 
 
-def get_card_transactions(dict_list: list, cards_set: set):
-    total_amount_list = []
-    for card in cards_set:
-        total_amount = 0
-        for transaction in dict_list:
-            if transaction["Номер карты"] == card:
-                total_amount += transaction["Сумма операции"]
-        total_amount_list.append(abs(total_amount))
-    return total_amount_list
+def get_card_total_amount(transactions: list, card: str):
+    total_amount = 0
+    for transaction in transactions:
+        if transaction["Номер карты"] == card:
+            total_amount += transaction["Сумма операции"]
+    return total_amount
 
 
 def get_api_convertion_to_rub(transaction: dict) -> float:
@@ -114,10 +111,24 @@ def spending_by_category(transactions: pd.DataFrame, category: str, date: Option
     pass
 
 
-def format_transaction(transaction: dict):
-    return {
-        "date": transaction["Дата операции"][0:10],
-        "amount": transaction["Сумма операции"],
-        "category": transaction["Категория"],
-        "description": transaction["Описание"],
-    }
+def format_transactions(transactions: list):
+    formatted_transactions = []
+    for transaction in transactions:
+        formatted_transactions.append({
+            "date": transaction["Дата операции"][0:10],
+            "amount": transaction["Сумма операции"],
+            "category": transaction["Категория"],
+            "description": transaction["Описание"],
+            })
+    return formatted_transactions
+
+
+def format_card(cards: set):
+    formatted_cards = []
+    for card in cards:
+        formatted_cards.append({
+            "last_digits": card[1:],
+            "total_spent": get_card_total_amount["Сумма операции"],
+            "cashback": transaction["Категория"],
+        })
+    return formatted_cards
