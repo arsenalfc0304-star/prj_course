@@ -1,3 +1,5 @@
+from typing import Optional
+
 import pandas as pd
 import requests
 from dotenv import load_dotenv
