@@ -84,19 +84,15 @@ def get_api_stock_price(stock: str) -> float:
     """
     обращается к внешнему API (Exchange Rates Data API) для получения текущего курса акций
     """
-    url = "'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey=demo'"
-    payload = {
-        "amount": 1.0,
-        "from": currency,
-        "to": "RUB",
-    }
-    headers = {"apikey": stock_apikey}
+    url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={stock}&apikey={stock_apikey}"
 
-    response = requests.get(url, headers=headers, params=payload)
+    response = requests.get(url)
     status_code = response.status_code
-    result = response.json()["result"]
+    data = response.json()
+    last_refreshed = data["Meta Data"]["3. Last Refreshed"]
+    result = data["Time Series (Daily)"][last_refreshed]["4. close"]
     if status_code == 200:
-        return float(result)
+        return result
     else:
         return 0.0
 

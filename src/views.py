@@ -41,7 +41,7 @@ def main_func(date_time: str) -> json:
 
     formatted_stock_data = []
     for stock in user_settings['user_stocks']:
-        formatted_stock_data.append({"stock": stock, "price": round(get_api_stock_price(stock), 2)})
+        formatted_stock_data.append({"stock": stock, "price": get_api_stock_price(stock)})
 
     message = {
         "greeting": select_greeting(int(date_time.strip()[11:13])),
