@@ -8,6 +8,7 @@ from utils import (
     get_card_transactions,
     load_json,
     sort_by_date,
+    format_transaction
 )
 
 
@@ -22,13 +23,17 @@ def main_func(date_time: str) -> json:
             selected_data.append(transaction)
     cards = get_cards(selected_data)
     total_amount = get_card_transactions(selected_data, cards)
+    most_valuable_transactions = sort_by_amount(selected_data)[0:5]
+    most_valuable_transactions_formatted = []
+    for transaction in most_valuable_transactions:
+        most_valuable_transactions_formatted.append(format_transaction(transaction))
     message = {
         "greeting": select_greeting(int(date_time.strip()[11:13])),
         "cards": [
             {"last_digits": "5814", "total_spent": 1262.00, "cashback": 12.62},
             {"last_digits": "7512", "total_spent": 7.94, "cashback": 0.08},
         ],
-        "top_transactions": sort_by_amount(selected_data)[0:5],
+        "top_transactions": most_valuable_transactions_formatted,
         # "top_transactions": [
         #     {
         #         "date": "21.12.2021",

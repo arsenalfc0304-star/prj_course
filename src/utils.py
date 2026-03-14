@@ -10,6 +10,7 @@ import datetime
 load_dotenv()
 apikey = os.getenv("API_KEY")
 
+
 def select_greeting(hour_of_day: int) -> str:
     """
     принимает текущий час,
@@ -45,8 +46,8 @@ def sort_by_amount(dict_list: list, descending: bool = True) -> list:
 def get_cards(dict_list: list):
     cards_set = set()
     for transaction in dict_list:
-        if str(transaction['Номер карты'])[1:].isdigit():
-            cards_set.add(transaction['Номер карты'])
+        if str(transaction["Номер карты"])[1:].isdigit():
+            cards_set.add(transaction["Номер карты"])
     return cards_set
 
 
@@ -55,8 +56,8 @@ def get_card_transactions(dict_list: list, cards_set: set):
     for card in cards_set:
         total_amount = 0
         for transaction in dict_list:
-            if transaction['Номер карты'] == card:
-                total_amount += transaction['Сумма операции']
+            if transaction["Номер карты"] == card:
+                total_amount += transaction["Сумма операции"]
         total_amount_list.append(abs(total_amount))
     return total_amount_list
 
@@ -101,13 +102,22 @@ def sort_by_date(dict_list: list, descending: bool = False) -> list:
     принимает список словарей и необязательный параметр, задающий порядок сортировки (по умолчанию — убывание),
     возвращает новый список, отсортированный по дате (date)
     """
-    return sorted(dict_list, key=lambda x: datetime.datetime.strptime(x["Дата операции"], "%d.%m.%Y %H:%M:%S"), reverse=descending)
+    return sorted(
+        dict_list,
+        key=lambda x: datetime.datetime.strptime(x["Дата операции"], "%d.%m.%Y %H:%M:%S"),
+        reverse=descending,
+    )
 
 
-def spending_by_category(transactions: pd.DataFrame,
-                         category: str,
-                         date: Optional[str] = None) -> pd.DataFrame:
-    """
-
-    """
+def spending_by_category(transactions: pd.DataFrame, category: str, date: Optional[str] = None) -> pd.DataFrame:
+    """ """
     pass
+
+
+def format_transaction(transaction: dict):
+    return {
+        "date": transaction["Дата операции"][0:10],
+        "amount": transaction["Сумма операции"],
+        "category": transaction["Категория"],
+        "description": transaction["Описание"],
+    }
