@@ -28,7 +28,7 @@ def main_func(date_time: str) -> json:
             {"last_digits": "5814", "total_spent": 1262.00, "cashback": 12.62},
             {"last_digits": "7512", "total_spent": 7.94, "cashback": 0.08},
         ],
-        "top_transactions": sort_by_amount(sorted_data)[0:5],
+        "top_transactions": sort_by_amount(selected_data)[0:5],
         # "top_transactions": [
         #     {
         #         "date": "21.12.2021",
@@ -56,4 +56,4 @@ def main_func(date_time: str) -> json:
     print(total_amount)
 
 
-main_func("2021-10-28 01:02:02")
+main_func("2021-11-28 01:02:02")
