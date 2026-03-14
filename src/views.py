@@ -39,6 +39,6 @@ def main_func(date_time: str) -> json:
     print(json.dumps(message, ensure_ascii=False))
     print(cards)
     print(total_amount)
-    print(data[0])
+    print(type(data[0]['Дата платежа']))
 
 main_func("2026-02-28 01-02-02")
