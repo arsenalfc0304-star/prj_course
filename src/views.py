@@ -14,8 +14,12 @@ from utils import (
 def main_func(date_time: str) -> json:
     raw_data = read_data_from_excel("data/operations.xlsx")
     sorted_data = sort_by_date(raw_data)
-    cards = get_cards(sorted_data)
-    total_amount = get_card_transactions(sorted_data, cards)
+    selected_data = []
+    for transaction in sorted_data:
+        if int(transaction['Дата операции'][3:5]) >= int(date_time.strip()[5:7]):
+            selected_data.append(transaction)
+    cards = get_cards(selected_data)
+    total_amount = get_card_transactions(selected_data, cards)
     message = {
         "greeting": select_greeting(int(date_time.strip()[11:13])),
         "cards": [
