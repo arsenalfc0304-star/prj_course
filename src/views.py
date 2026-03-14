@@ -16,7 +16,9 @@ def main_func(date_time: str) -> json:
     sorted_data = sort_by_date(raw_data)
     selected_data = []
     for transaction in sorted_data:
-        if int(transaction['Дата операции'][3:5]) >= int(date_time.strip()[5:7]):
+        if datetime.datetime.strptime(transaction["Дата операции"], "%d.%m.%Y %H:%M:%S") >= datetime.datetime.strptime(
+            date_time.strip(), "%Y-%m-%d %H:%M:%S"
+        ):
             selected_data.append(transaction)
     cards = get_cards(selected_data)
     total_amount = get_card_transactions(selected_data, cards)
@@ -54,4 +56,4 @@ def main_func(date_time: str) -> json:
     print(total_amount)
 
 
-main_func("2026-02-28 01-02-02")
+main_func("2021-10-28 01:02:02")
