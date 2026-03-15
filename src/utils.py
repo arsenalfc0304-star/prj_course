@@ -52,12 +52,12 @@ def get_cards(dict_list: list):
     return cards_set
 
 
-def get_card_total_amount(transactions: list, card: str):
-    total_amount = 0
+def get_card_total_expenses(transactions: list, card: str):
+    total_expenses = 0
     for transaction in transactions:
-        if transaction["Номер карты"] == card:
-            total_amount += transaction["Сумма операции"]
-    return total_amount
+        if transaction["Номер карты"] == card and transaction["Сумма операции"] < 0:
+            total_expenses += transaction["Сумма операции"]
+    return total_expenses
 
 
 def get_api_currency_rate(currency: str) -> float:

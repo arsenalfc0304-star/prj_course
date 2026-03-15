@@ -5,7 +5,7 @@ from utils import (
     read_data_from_excel,
     sort_by_amount,
     get_cards,
-    get_card_total_amount,
+    get_card_total_expenses,
     load_json,
     sort_by_date,
     format_transactions,
@@ -30,8 +30,8 @@ def main_func(date_time: str) -> json:
         formatted_card_information.append(
             {
                 "last_digits": card[1:],
-                "total_spent": round(get_card_total_amount(selected_data, card), 2),
-                "cashback": round(get_card_total_amount(selected_data, card) / 100, 2)
+                "total_spent": abs(round(get_card_total_expenses(selected_data, card), 2)),
+                "cashback": abs(round(get_card_total_expenses(selected_data, card) / 100, 2))
             }
         )
     user_settings = load_json("data/user_settings.json")
@@ -53,4 +53,4 @@ def main_func(date_time: str) -> json:
     print(json.dumps(message, ensure_ascii=False))
 
 
-main_func("2021-11-28 01:02:02")
+main_func("2021-10-28 01:02:02")
