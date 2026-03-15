@@ -1,8 +1,9 @@
 import re
+import json
 
-def process_bank_search(transactions: list[dict], search: str) -> list[dict]:
+def search_transactions(transactions: list[dict], search: str) -> json:
     """
-    принимает список словарей с данными о банковских операциях и строку поиска,
+    принимает путь к файлу json, содержащему список словарей с данными о банковских операциях, и строку поиска,
     возвращает список словарей, у которых в описании есть данная строка
     """
     filtered_transactions = []
@@ -11,4 +12,4 @@ def process_bank_search(transactions: list[dict], search: str) -> list[dict]:
             if not re.search(search.lower(), str(transaction[key]).lower()) is None:
                 filtered_transactions.append(transaction)
                 continue
-    return filtered_transactions
+    return json.dumps(filtered_transactions)
