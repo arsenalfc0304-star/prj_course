@@ -50,7 +50,7 @@ def main_func(date_time: str) -> json:
         "currency_rates": formatted_currency_data,
         "stock_prices": formatted_stock_data
     }
-    print(json.dumps(message, ensure_ascii=False))
+    return json.dumps(message, ensure_ascii=False)
 
 
-main_func("2021-10-28 01:02:02")
+print(main_func("2021-10-28 01:02:02"))
