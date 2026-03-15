@@ -15,7 +15,7 @@ from utils import (
 
 
 def main_func(date_time: str) -> json:
-    raw_data = read_data_from_excel("data/operations.xlsx")
+    raw_data = (read_data_from_excel("data/operations.xlsx")).to_dict(orient="records")
     sorted_data = sort_by_date(raw_data)
     selected_data = []
     for transaction in sorted_data:

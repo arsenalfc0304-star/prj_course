@@ -1,11 +1,11 @@
-from typing import Optional
-
 import pandas as pd
 import requests
 from dotenv import load_dotenv
 import os
 import json
 import datetime
+
+from pandas.core.interchange.dataframe_protocol import DataFrame
 
 load_dotenv()
 currency_apikey = os.getenv("CURRENCY_API_KEY")
@@ -27,13 +27,13 @@ def select_greeting(hour_of_day: int) -> str:
         return "Добрый вечер"
 
 
-def read_data_from_excel(path: str) -> list:
+def read_data_from_excel(path: str) -> DataFrame:
     """
     принимает путь к файлу Excel,
     выдает список словарей с транзакциями
     """
     data = pd.read_excel(path)
-    return data.to_dict(orient="records")
+    return data
 
 
 def sort_by_amount(dict_list: list, descending: bool = True) -> list:
@@ -88,9 +88,9 @@ def get_api_stock_price(stock: str) -> float:
 
     response = requests.get(url)
     status_code = response.status_code
-    result = response.json()
-    # last_refreshed = raw_result['Meta Data']["3. Last Refreshed"]
-    # result = raw_result["Time Series (Daily)"][last_refreshed]["4. close"]
+    raw_result = response.json()
+    last_refreshed = raw_result['Meta Data']["3. Last Refreshed"]
+    result = raw_result["Time Series (Daily)"][last_refreshed]["4. close"]
     if status_code == 200:
         return result
     else:
@@ -120,11 +120,6 @@ def sort_by_date(dict_list: list, descending: bool = False) -> list:
         key=lambda x: datetime.datetime.strptime(x["Дата операции"], "%d.%m.%Y %H:%M:%S"),
         reverse=descending,
     )
-
-
-def spending_by_category(transactions: pd.DataFrame, category: str, date: Optional[str] = None) -> pd.DataFrame:
-    """ """
-    pass
 
 
 def format_transactions(transactions: list):
