@@ -137,14 +137,3 @@ def format_transactions(transactions: list):
             "description": transaction["Описание"],
             })
     return formatted_transactions
-
-
-def format_card(cards: set):
-    formatted_cards = []
-    for card in cards:
-        formatted_cards.append({
-            "last_digits": card[1:],
-            "total_spent": get_card_total_amount["Сумма операции"],
-            "cashback": transaction["Категория"],
-        })
-    return formatted_cards
