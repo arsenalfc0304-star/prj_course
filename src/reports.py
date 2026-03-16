@@ -8,10 +8,15 @@ def spending_by_category(transactions: pd.DataFrame, category: str, date: Option
     """
     :param transactions:
     """
-    if datetime.datetime.strptime(transaction["Дата операции"][3:5], "%m) > 11:
+    if date is None:
+        date_time = datetime.datetime.now()
+    return transactions.loc[
+        transactions.Категория.isin([category])
+        & (
+            (datetime.datetime.strptime(transactions["Дата операции"], "%d.%m.%Y %H:%M:%S").month - 3)
+            >= date_time.month
+        )
+    ]
 
-    date_filtered_transactions = transactions.loc[transactions['Дата операции']
-    return transactions.loc[transactions.Категория.isin([category])]
 
-
-print(spending_by_category(read_data_from_excel("data/operations.xlsx"), 'Супермаркеты'))
+print(spending_by_category(read_data_from_excel("data/operations.xlsx"), "Супермаркеты"))
