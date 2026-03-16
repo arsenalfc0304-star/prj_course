@@ -28,3 +28,26 @@ def spending_by_category(transactions: pd.DataFrame, category: str, date: Option
 
 
 print(spending_by_category(read_data_from_excel("data/operations.xlsx"), "Супермаркеты", "2021-11-28 01:02:02"))
+
+
+def decorator(func):
+    def wrapper(*args, **kwargs):
+        try:
+            result = func(*args, **kwargs)
+            if filename == "":
+                print(f"{func.__name__} ok")
+            else:
+                with open(filename, "a") as file:
+                    file.write(f"{func.__name__} ok\n")
+            return result
+        except Exception as e:
+            if filename == "":
+                print(f"{func.__name__} error: {e}. Inputs: ({args}, {kwargs})")
+            else:
+                with open(filename, "a") as file:
+                    file.write(f"{func.__name__} error: {e}. Inputs: ({args}, {kwargs})\n")
+
+    return wrapper
+
+
+return decorator
