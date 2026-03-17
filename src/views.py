@@ -15,6 +15,11 @@ from utils import (
 
 
 def main_func(date_time: str) -> json:
+    """
+    принимает строку с датой и временем в формате YYYY-MM-DD HH:MM:SS,
+    возвращает JSON-ответ со следующими данными:
+    приветствие; по каждой карте: последние 4 цифры карты, общая сумма расходов, кешбэк (1 рубль на каждые 100 рублей); топ-5 транзакций по сумме платежа; курс валют; стоимость акций.
+    """
     raw_data = (read_data_from_excel("data/operations.xlsx")).to_dict(orient="records")
     sorted_data = sort_by_date(raw_data)
     selected_data = []
