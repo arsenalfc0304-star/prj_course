@@ -4,6 +4,11 @@ import datetime
 from utils import read_data_from_excel
 
 def save_report_to_excel(file_name=None):
+    """
+    принимает необязательный аргумент - путь к файлу,
+    сохраняет результат работы вложенной функции по вышеуказанному пути
+    (если путь не задан, выбирается путь по умолчанию)
+    """
     def decorator(func):
         def wrapper(*args, **kwargs):
             result = func(*args, **kwargs)
@@ -18,7 +23,9 @@ def save_report_to_excel(file_name=None):
 @save_report_to_excel()
 def spending_by_category(transactions: pd.DataFrame, category: str, date: Optional[str] = None) -> pd.DataFrame:
     """
-    :param transactions:
+    принимает: датафрейм с транзакциями, название категории, опциональную дату
+    (если дата не передана, то берется текущая дата),
+    возвращает траты по заданной категории за последние три месяца (от переданной даты).
     """
     if date is None:
         end_date = datetime.datetime.now()
