@@ -1,17 +1,8 @@
-import json
 import datetime
-from utils import (
-    select_greeting,
-    read_data_from_excel,
-    sort_by_amount,
-    get_cards,
-    get_card_total_expenses,
-    load_json,
-    sort_by_date,
-    format_transactions,
-    get_api_currency_rate,
-    get_api_stock_price,
-)
+import json
+
+from utils import (format_transactions, get_api_currency_rate, get_api_stock_price, get_card_total_expenses, get_cards,
+                   load_json, read_data_from_excel, select_greeting, sort_by_amount, sort_by_date)
 
 
 def main_func(date_time: str) -> json:

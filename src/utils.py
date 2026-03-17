@@ -1,10 +1,10 @@
+import datetime
+import json
+import os
+
 import pandas as pd
 import requests
 from dotenv import load_dotenv
-import os
-import json
-import datetime
-
 from pandas.core.interchange.dataframe_protocol import DataFrame
 
 load_dotenv()

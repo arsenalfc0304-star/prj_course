@@ -1,6 +1,8 @@
-from typing import Optional
-import pandas as pd
 import datetime
+from typing import Optional
+
+import pandas as pd
+
 from utils import read_data_from_excel
 
 
