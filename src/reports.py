@@ -3,12 +3,14 @@ import pandas as pd
 import datetime
 from utils import read_data_from_excel
 
+
 def save_report_to_excel(file_name=None):
     """
     принимает необязательный аргумент - путь к файлу,
     сохраняет результат работы вложенной функции по вышеуказанному пути
     (если путь не задан, выбирается путь по умолчанию)
     """
+
     def decorator(func):
         def wrapper(*args, **kwargs):
             result = func(*args, **kwargs)
@@ -17,8 +19,11 @@ def save_report_to_excel(file_name=None):
             else:
                 result.to_excel(file_name)
             return result
+
         return wrapper
+
     return decorator
+
 
 @save_report_to_excel()
 def spending_by_category(transactions: pd.DataFrame, category: str, date: Optional[str] = None) -> pd.DataFrame:
@@ -42,12 +47,10 @@ def spending_by_category(transactions: pd.DataFrame, category: str, date: Option
         & (transactions["Дата операции"] <= end_date)
     )
 
-
     return transactions.loc[mask]
 
 
 print(spending_by_category(read_data_from_excel("data/operations.xlsx"), "Супермаркеты", "2021-11-28 01:02:02"))
-
 
 
 spending_by_category(read_data_from_excel("data/operations.xlsx"), "Супермаркеты", "2021-11-28 01:02:02")

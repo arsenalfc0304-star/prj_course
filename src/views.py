@@ -10,7 +10,7 @@ from utils import (
     sort_by_date,
     format_transactions,
     get_api_currency_rate,
-    get_api_stock_price
+    get_api_stock_price,
 )
 
 
@@ -36,16 +36,16 @@ def main_func(date_time: str) -> json:
             {
                 "last_digits": card[1:],
                 "total_spent": abs(round(get_card_total_expenses(selected_data, card), 2)),
-                "cashback": abs(round(get_card_total_expenses(selected_data, card) / 100, 2))
+                "cashback": abs(round(get_card_total_expenses(selected_data, card) / 100, 2)),
             }
         )
     user_settings = load_json("data/user_settings.json")
     formatted_currency_data = []
-    for currency in user_settings['user_currencies']:
+    for currency in user_settings["user_currencies"]:
         formatted_currency_data.append({"currency": currency, "rate": round(get_api_currency_rate(currency), 2)})
 
     formatted_stock_data = []
-    for stock in user_settings['user_stocks']:
+    for stock in user_settings["user_stocks"]:
         formatted_stock_data.append({"stock": stock, "price": get_api_stock_price(stock)})
 
     message = {
@@ -53,7 +53,7 @@ def main_func(date_time: str) -> json:
         "cards": formatted_card_information,
         "top_transactions": format_transactions(most_valuable_transactions),
         "currency_rates": formatted_currency_data,
-        "stock_prices": formatted_stock_data
+        "stock_prices": formatted_stock_data,
     }
     return json.dumps(message, ensure_ascii=False)
 

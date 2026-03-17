@@ -88,6 +88,7 @@ def get_api_currency_rate(currency: str) -> float:
     else:
         return 0.0
 
+
 def get_api_stock_price(stock: str) -> float:
     """
     обращается к внешнему API (Exchange Rates Data API) для получения текущего курса акции
@@ -97,7 +98,7 @@ def get_api_stock_price(stock: str) -> float:
     response = requests.get(url)
     status_code = response.status_code
     raw_result = response.json()
-    last_refreshed = raw_result['Meta Data']["3. Last Refreshed"]
+    last_refreshed = raw_result["Meta Data"]["3. Last Refreshed"]
     result = raw_result["Time Series (Daily)"][last_refreshed]["4. close"]
     if status_code == 200:
         return result
@@ -137,10 +138,12 @@ def format_transactions(transactions: list) -> list[dict]:
     """
     formatted_transactions = []
     for transaction in transactions:
-        formatted_transactions.append({
-            "date": transaction["Дата операции"][0:10],
-            "amount": transaction["Сумма операции"],
-            "category": transaction["Категория"],
-            "description": transaction["Описание"],
-            })
+        formatted_transactions.append(
+            {
+                "date": transaction["Дата операции"][0:10],
+                "amount": transaction["Сумма операции"],
+                "category": transaction["Категория"],
+                "description": transaction["Описание"],
+            }
+        )
     return formatted_transactions

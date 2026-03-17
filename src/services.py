@@ -1,6 +1,7 @@
 import re
 import json
 
+
 def search_transactions(transactions: list[dict], search: str) -> json:
     """
     принимает путь к файлу json, содержащему список словарей с данными о банковских операциях, и строку поиска,
