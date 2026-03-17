@@ -115,7 +115,7 @@ def load_json(path) -> list[dict]:
         with open(path, encoding="utf-8") as f:
             data = json.load(f)
             return data
-    except Exception as e:
+    except Exception:
         return []
 
 
