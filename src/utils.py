@@ -27,6 +27,19 @@ def select_greeting(hour_of_day: int) -> str:
         return "Добрый вечер"
 
 
+def load_json(path) -> list[dict]:
+    """
+    принимает на вход путь до JSON-файла и возвращает список словарей.
+    Если файл пустой, содержит не список или не найден, функция возвращает пустой список.
+    """
+    try:
+        with open(path, encoding="utf-8") as f:
+            data = json.load(f)
+            return data
+    except Exception:
+        return []
+
+
 def read_data_from_excel(path: str) -> DataFrame:
     """
     принимает путь к файлу Excel,
@@ -104,19 +117,6 @@ def get_api_stock_price(stock: str) -> float:
         return result
     else:
         return 0.0
-
-
-def load_json(path) -> list[dict]:
-    """
-    принимает на вход путь до JSON-файла и возвращает список словарей.
-    Если файл пустой, содержит не список или не найден, функция возвращает пустой список.
-    """
-    try:
-        with open(path, encoding="utf-8") as f:
-            data = json.load(f)
-            return data
-    except Exception:
-        return []
 
 
 def sort_by_date(dict_list: list, descending: bool = False) -> list:
