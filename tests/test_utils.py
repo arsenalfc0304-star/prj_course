@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import Mock, patch
-from src.utils import load_json, read_data_from_excel, sort_by_date
+from src.utils import load_json, read_data_from_excel, sort_by_date, get_api_currency_rate
 import pandas as pd
 
 def test_load_json():
@@ -25,3 +25,13 @@ def test_sort_by_date(dicts: list) -> list:
     {"id": 615064591, "state": "CANCELED", "Дата операции": "14.10.2018 08:21:33"},
     {"id": 41428829, "state": "EXECUTED", "Дата операции": "03.07.2019 18:35:29"}
 ]
+
+
+def test_get_api_currency_rate_success():
+    mock_response = Mock()
+    mock_response.status_code = 200
+    mock_response.json.return_value = {"result": 999.9}
+
+    with patch("requests.get", return_value=mock_response):
+        result = get_api_currency_rate("USD")
+        assert result == 999.9
