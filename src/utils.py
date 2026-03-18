@@ -49,6 +49,18 @@ def read_data_from_excel(path: str) -> DataFrame:
     return data
 
 
+def sort_by_date(dict_list: list, descending: bool = False) -> list:
+    """
+    принимает список словарей и необязательный параметр, задающий порядок сортировки (по умолчанию — убывание),
+    возвращает новый список, отсортированный по дате (date)
+    """
+    return sorted(
+        dict_list,
+        key=lambda x: datetime.datetime.strptime(x["Дата операции"], "%d.%m.%Y %H:%M:%S"),
+        reverse=descending,
+    )
+
+
 def sort_by_amount(dict_list: list, descending: bool = True) -> list:
     """
     принимает список словарей и необязательный параметр, задающий порядок сортировки (по умолчанию — убывание),
@@ -117,18 +129,6 @@ def get_api_stock_price(stock: str) -> float:
         return result
     else:
         return 0.0
-
-
-def sort_by_date(dict_list: list, descending: bool = False) -> list:
-    """
-    принимает список словарей и необязательный параметр, задающий порядок сортировки (по умолчанию — убывание),
-    возвращает новый список, отсортированный по дате (date)
-    """
-    return sorted(
-        dict_list,
-        key=lambda x: datetime.datetime.strptime(x["Дата операции"], "%d.%m.%Y %H:%M:%S"),
-        reverse=descending,
-    )
 
 
 def format_transactions(transactions: list) -> list[dict]:
