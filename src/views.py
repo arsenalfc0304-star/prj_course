@@ -48,5 +48,3 @@ def main_func(date_time: str) -> json:
         "stock_prices": formatted_stock_data,
     }
     return json.dumps(message, ensure_ascii=False)
-
-print(main_func("2021-10-28 01:02:02"))

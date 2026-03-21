@@ -46,3 +46,7 @@ def transactions() -> list:
             "to": "Счет 41421565395219882431",
         },
     ]
+
+@pytest.fixture
+def category() -> str:
+    return "Супермаркеты"

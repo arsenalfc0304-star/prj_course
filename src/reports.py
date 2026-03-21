@@ -48,5 +48,5 @@ def spending_by_category(transactions: pd.DataFrame, category: str, date: Option
         & (transactions["Дата операции"] >= start_date)
         & (transactions["Дата операции"] <= end_date)
     )
-    reports_logger.info("возвращаем траты по заданной категории за последние три месяца")
+    reports_logger.info(f"возвращаем траты по категории {category} за последние три месяца")
     return transactions.loc[mask]
