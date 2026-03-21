@@ -6,6 +6,7 @@ import pandas as pd
 import requests
 from dotenv import load_dotenv
 from pandas.core.interchange.dataframe_protocol import DataFrame
+from loggers import utils_logger
 
 load_dotenv()
 currency_apikey = os.getenv("CURRENCY_API_KEY")
@@ -35,8 +36,10 @@ def load_json(path) -> list[dict]:
     try:
         with open(path, encoding="utf-8") as f:
             data = json.load(f)
+            utils_logger.info(f"возвращаем список словарей с данными о финансовых транзакциях из файла {path}")
             return data
     except Exception:
+        utils_logger.error(f"произошла ошибка получения данных о транзакции {e}")
         return []
 
 
@@ -107,8 +110,8 @@ def get_api_currency_rate(currency: str) -> float:
 
     response = requests.get(url, headers=headers, params=payload)
     status_code = response.status_code
-    result = response.json()["result"]
     if status_code == 200:
+        result = response.json()["result"]
         return float(result)
     else:
         return 0.0
@@ -116,16 +119,16 @@ def get_api_currency_rate(currency: str) -> float:
 
 def get_api_stock_price(stock: str) -> float:
     """
-    обращается к внешнему API (Exchange Rates Data API) для получения текущего курса акции
+    обращается к внешнему API (www.alphavantage.co) для получения текущего курса акции
     """
     url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={stock}&apikey={stock_apikey}"
 
     response = requests.get(url)
     status_code = response.status_code
-    raw_result = response.json()
-    last_refreshed = raw_result["Meta Data"]["3. Last Refreshed"]
-    result = raw_result["Time Series (Daily)"][last_refreshed]["4. close"]
     if status_code == 200:
+        data = response.json()
+        last_refreshed = data["Meta Data"]["3. Last Refreshed"]
+        result = data["Time Series (Daily)"][last_refreshed]["4. close"]
         return result
     else:
         return 0.0

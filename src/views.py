@@ -8,7 +8,7 @@ from utils import (format_transactions, get_api_currency_rate, get_api_stock_pri
 def main_func(date_time: str) -> json:
     """
     принимает строку с датой и временем в формате YYYY-MM-DD HH:MM:SS,
-    возвращает JSON-ответ со следующими данными:
+    возвращает JSON-ответ со следующими данными (с начала месяца, на который выпадает входящая дата, по входящую дату):
     приветствие; по каждой карте: последние 4 цифры карты, общая сумма расходов, кешбэк (1 рубль на каждые 100 рублей);
     топ-5 транзакций по сумме платежа; курс валют; стоимость акций.
     """
@@ -16,9 +16,9 @@ def main_func(date_time: str) -> json:
     sorted_data = sort_by_date(raw_data)
     selected_data = []
     for transaction in sorted_data:
-        if datetime.datetime.strptime(transaction["Дата операции"], "%d.%m.%Y %H:%M:%S") >= datetime.datetime.strptime(
-            date_time.strip(), "%Y-%m-%d %H:%M:%S"
-        ):
+        if datetime.datetime.strptime(transaction["Дата операции"], "%d.%m.%Y %H:%M:%S") <= datetime.datetime.strptime(
+            date_time.strip(), "%Y-%m-%d %H:%M:%S") and datetime.datetime.strptime(transaction["Дата операции"], "%d.%m.%Y %H:%M:%S").month == datetime.datetime.strptime(
+            date_time.strip(), "%Y-%m-%d %H:%M:%S").month:
             selected_data.append(transaction)
     most_valuable_transactions = sort_by_amount(selected_data)[0:5]
     cards = get_cards(selected_data)
@@ -48,3 +48,5 @@ def main_func(date_time: str) -> json:
         "stock_prices": formatted_stock_data,
     }
     return json.dumps(message, ensure_ascii=False)
+
+print(main_func("2021-10-28 01:02:02"))

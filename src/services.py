@@ -1,5 +1,6 @@
 import json
 import re
+from src.loggers import services_logger
 
 
 def search_transactions(transactions: list[dict], search: str) -> json:
@@ -13,4 +14,5 @@ def search_transactions(transactions: list[dict], search: str) -> json:
             if not re.search(search.lower(), str(transaction[key]).lower()) is None:
                 filtered_transactions.append(transaction)
                 continue
+    services_logger.info(f"возвращаем список словарей, у которых в описании есть строка {search}")
     return json.dumps(filtered_transactions)

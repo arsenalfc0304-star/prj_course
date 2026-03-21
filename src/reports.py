@@ -3,7 +3,7 @@ from typing import Optional
 
 import pandas as pd
 
-from utils import read_data_from_excel
+from src.loggers import reports_logger
 
 
 def save_report_to_excel(file_name=None):
@@ -48,5 +48,5 @@ def spending_by_category(transactions: pd.DataFrame, category: str, date: Option
         & (transactions["Дата операции"] >= start_date)
         & (transactions["Дата операции"] <= end_date)
     )
-
+    reports_logger.info("возвращаем траты по заданной категории за последние три месяца")
     return transactions.loc[mask]
