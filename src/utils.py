@@ -6,7 +6,7 @@ import pandas as pd
 import requests
 from dotenv import load_dotenv
 from pandas.core.interchange.dataframe_protocol import DataFrame
-from loggers import utils_logger
+from src.loggers import utils_logger
 
 load_dotenv()
 currency_apikey = os.getenv("CURRENCY_API_KEY")
@@ -38,7 +38,7 @@ def load_json(path) -> list[dict]:
             data = json.load(f)
             utils_logger.info(f"возвращаем список словарей с данными о финансовых транзакциях из файла {path}")
             return data
-    except Exception:
+    except Exception as e:
         utils_logger.error(f"произошла ошибка получения данных о транзакции {e}")
         return []
 
