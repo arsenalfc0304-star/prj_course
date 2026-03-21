@@ -3,12 +3,15 @@ from unittest.mock import Mock, patch
 from src.utils import load_json, read_data_from_excel, sort_by_date, get_api_currency_rate
 import pandas as pd
 
-def test_load_json():
-    assert load_json("data/operations1.json") == []
-    assert load_json("data/user_settings.json") == {
+@pytest.mark.parametrize("string, expected_result", [
+    ("data/operations1.json", []),
+    ("data/user_settings.json", {
   "user_currencies": ["USD", "EUR"],
   "user_stocks": ["AAPL", "AMZN", "GOOGL"]
-}
+})
+])
+def test_load_json(string, expected_result):
+    assert load_json(string) == expected_result
 
 
 def test_read_data_from_excel_with_mock(sample_df):
