@@ -1,8 +1,8 @@
-from src.utils import read_data_from_excel
+from utils import read_data_from_excel
 
-from src.views import main_func
-from src.services import search_transactions
-from src.reports import spending_by_category
+from views import main_func
+from services import search_transactions
+from reports import spending_by_category
 
 
 main_func("2021-10-28 01:02:02")
