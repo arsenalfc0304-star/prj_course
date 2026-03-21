@@ -41,7 +41,7 @@ def spending_by_category(transactions: pd.DataFrame, category: str, date: Option
 
     start_date = end_date - datetime.timedelta(days=90)
 
-    transactions["Дата операции"] = pd.to_datetime(transactions["Дата операции"])
+    transactions["Дата операции"] = pd.to_datetime(transactions["Дата операции"], dayfirst=True)
 
     mask = (
         (transactions.Категория == category)

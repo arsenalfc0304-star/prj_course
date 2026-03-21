@@ -16,9 +16,12 @@ def main_func(date_time: str) -> json:
     sorted_data = sort_by_date(raw_data)
     selected_data = []
     for transaction in sorted_data:
-        if datetime.datetime.strptime(transaction["Дата операции"], "%d.%m.%Y %H:%M:%S") <= datetime.datetime.strptime(
-            date_time.strip(), "%Y-%m-%d %H:%M:%S") and datetime.datetime.strptime(transaction["Дата операции"], "%d.%m.%Y %H:%M:%S").month == datetime.datetime.strptime(
-            date_time.strip(), "%Y-%m-%d %H:%M:%S").month:
+        if (
+            datetime.datetime.strptime(transaction["Дата операции"], "%d.%m.%Y %H:%M:%S")
+            <= datetime.datetime.strptime(date_time.strip(), "%Y-%m-%d %H:%M:%S")
+            and datetime.datetime.strptime(transaction["Дата операции"], "%d.%m.%Y %H:%M:%S").month
+            == datetime.datetime.strptime(date_time.strip(), "%Y-%m-%d %H:%M:%S").month
+        ):
             selected_data.append(transaction)
     most_valuable_transactions = sort_by_amount(selected_data)[0:5]
     cards = get_cards(selected_data)

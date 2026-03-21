@@ -6,6 +6,7 @@ import pandas as pd
 import requests
 from dotenv import load_dotenv
 from pandas.core.interchange.dataframe_protocol import DataFrame
+
 from src.loggers import utils_logger
 
 load_dotenv()
