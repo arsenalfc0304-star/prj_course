@@ -1,0 +1,11 @@
+from utils import read_data_from_excel
+
+from src.views import main_func
+from src.services import search_transactions
+from src.reports import spending_by_category
+
+
+main_func("2021-10-28 01:02:02")
+search_transactions(read_data_from_excel("data/operations.xlsx").to_dict(orient="records"), 'Перевод')
+spending_by_category(read_data_from_excel("data/operations.xlsx"), "Супермаркеты", "2021-11-28 01:02:02")
+

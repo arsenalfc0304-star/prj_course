@@ -50,9 +50,3 @@ def spending_by_category(transactions: pd.DataFrame, category: str, date: Option
     )
 
     return transactions.loc[mask]
-
-
-print(spending_by_category(read_data_from_excel("data/operations.xlsx"), "Супермаркеты", "2021-11-28 01:02:02"))
-
-
-spending_by_category(read_data_from_excel("data/operations.xlsx"), "Супермаркеты", "2021-11-28 01:02:02")
